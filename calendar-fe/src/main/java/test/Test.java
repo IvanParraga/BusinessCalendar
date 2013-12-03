@@ -1,7 +1,8 @@
+package test;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 
-@Path("/test")
+@Path("test")
 public class Test {
 	@GET
 	public String doGet() {
