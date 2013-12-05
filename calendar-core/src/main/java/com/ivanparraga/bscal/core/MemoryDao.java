@@ -3,12 +3,12 @@ package com.ivanparraga.bscal.core;
 import java.util.Hashtable;
 import java.util.Map;
 
-import com.ivanparraga.bscal.core.domain.DomainObject;
+import com.ivanparraga.bscal.core.domain.Entity;
 
 /**
  * This is a generic on-memory DAO for prototyping.
  */
-public class MemoryDao<T extends DomainObject> implements Dao<T> {
+public class MemoryDao<T extends Entity> implements Dao<T> {
 	// I use Hashtable because it is thread safe
 	private final Map<String, T> content = new Hashtable<>();
 

@@ -1,21 +1,24 @@
 package com.ivanparraga.bscal.core;
 
-import com.ivanparraga.bscal.core.domain.DomainObject;
+import com.ivanparraga.bscal.core.domain.Entity;
 
 /**
  * Basic CRUD operations.
  */
-public interface Dao<T extends DomainObject> {
+public interface Dao<T extends Entity> {
 	/**
-	 * Creates an object on the persistence system. It must contain an id.
+	 * Creates an entity on the persistence system. It must contain an id.
 	 */
 	void create(T t) throws PersistenceException;
 
 	/**
-	 * @throws NotSuchObjectException if the requested domain object is not
+	 * @throws NotSuchObjectException if the requested entity is not
 	 * 	stored
 	 */
 	T read(String id) throws PersistenceException;
 
+	/**
+	 * Deletes the specified entity.
+	 */
 	void delete(String id) throws PersistenceException;
 }

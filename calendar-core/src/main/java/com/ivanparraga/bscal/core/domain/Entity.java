@@ -1,5 +1,5 @@
 package com.ivanparraga.bscal.core.domain;
 
-public interface DomainObject {
+public interface Entity {
 	String getId();
 }
