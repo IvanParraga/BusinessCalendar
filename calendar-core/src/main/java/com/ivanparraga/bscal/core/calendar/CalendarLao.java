@@ -1,13 +1,7 @@
 package com.ivanparraga.bscal.core.calendar;
 
-import javax.inject.Inject;
+public interface CalendarLao {
 
-public class CalendarLao {
-	@Inject private CalendarDao dao;
+	public abstract Calendar createCalendar(String name, short year);
 
-	public Calendar createCalendar(String name, short year) {
-		Calendar calendar = new BasicCalendar(name, year);
-		dao.create(calendar);
-		return calendar;
-	}
 }
