@@ -1,29 +1,23 @@
 package com.ivanparraga.bscal.core.calendar;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
+import static org.testng.AssertJUnit.assertNotNull;
 
 import org.testng.annotations.Test;
-
-import com.ivanparraga.bscal.core.config.New;
 
 public class CalendarLaoTest {
 	@Test
 	public void createCalendar() {
-		CalendarLao lao = New.getInstance(CalendarLao.class);
+		CalendarLao lao = new CalendarLaoImpl(null);
 		String calendarName = "mine";
 		short year = 2014;
+		Calendar calendar = new BasicCalendar(calendarName, year);
 
-		Calendar calendar = lao.createCalendar(calendarName, year);
+		lao.createCalendar(calendar);
 
 		assertEquals(calendar.getName(), calendarName);
 		assertEquals(calendar.getYear(), year);
-
-		Calendar expectedCalendar = mock(Calendar.class);
-		when(expectedCalendar.getName()).thenReturn(calendarName);
-		when(expectedCalendar.getYear()).thenReturn(year);
-		assertEquals(calendar, expectedCalendar);
+		assertNotNull(calendar.getId());
 	}
 
 	@Test

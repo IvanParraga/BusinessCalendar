@@ -5,4 +5,6 @@ public interface Calendar {
 	String getName();
 
 	short getYear();
+
+	Object getId();
 }

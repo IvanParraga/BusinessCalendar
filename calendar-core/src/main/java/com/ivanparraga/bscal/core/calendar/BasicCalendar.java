@@ -1,6 +1,6 @@
 package com.ivanparraga.bscal.core.calendar;
 
-class BasicCalendar implements Calendar {
+public class BasicCalendar implements Calendar {
 	private final String name;
 	private final short year;
 

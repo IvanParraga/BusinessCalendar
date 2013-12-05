@@ -10,13 +10,21 @@ class CalendarLaoImpl implements CalendarLao {
 		this.dao = dao;
 	}
 
+	@Override
+	public Calendar createCalendar(Calendar calendar) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	/**
 	 * @see com.ivanparraga.bscal.core.calendar.CalendarLao#createCalendar(java.lang.String, short)
 	 */
-	@Override
-	public Calendar createCalendar(String name, short year) {
-		Calendar calendar = new BasicCalendar(name, year);
-		dao.create(calendar);
-		return calendar;
-	}
+//	@Override
+//	public Calendar createCalendar(Calendar calendar) {
+//		Calendar calendar = new BasicCalendar(name, year);
+//		dao.create(calendar);
+//		return calendar;
+//	}
+
+
 }
