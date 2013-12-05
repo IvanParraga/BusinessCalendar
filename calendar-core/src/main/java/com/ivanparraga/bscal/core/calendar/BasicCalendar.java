@@ -1,13 +1,25 @@
 package com.ivanparraga.bscal.core.calendar;
 
+import com.ivanparraga.bscal.core.domain.Calendar;
+
 public class BasicCalendar implements Calendar {
 	private final String name;
 	private final short year;
+	private String id;
 
 	public BasicCalendar(String name, short year) {
 		super();
 		this.name = name;
 		this.year = year;
+	}
+
+	@Override
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 
 	@Override

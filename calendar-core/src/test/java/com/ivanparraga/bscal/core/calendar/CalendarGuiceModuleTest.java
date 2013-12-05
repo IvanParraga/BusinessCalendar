@@ -30,6 +30,6 @@ public class CalendarGuiceModuleTest {
 		Class<? extends CalendarDao> actualClass =
 				injector.getInstance(CalendarDao.class).getClass();
 
-		assertEquals(actualClass, CalendarDaoImpl.class);
+		assertEquals(actualClass, CalendarDaoMemoryImpl.class);
 	}
 }

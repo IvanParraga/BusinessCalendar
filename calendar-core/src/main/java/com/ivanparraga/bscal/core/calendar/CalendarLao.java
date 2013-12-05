@@ -1,10 +1,13 @@
 package com.ivanparraga.bscal.core.calendar;
 
-public interface CalendarLao {
+import com.ivanparraga.bscal.core.domain.Calendar;
 
+public interface CalendarLao {
 	/**
-	 * @param calendar
-	 * @return The sa
+	 * Creates a Calendar. If it has no id a new id is provided and set to the
+	 * original calendar. If it set and acceptable for the persistence system
+	 * then is used; otherwise an exception is thrown.
+	 * @return the id assigned to this calendar.
 	 */
-	public abstract Calendar createCalendar(Calendar calendar);
+	abstract String createCalendar(Calendar calendar);
 }

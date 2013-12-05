@@ -2,6 +2,8 @@ package com.ivanparraga.bscal.core.calendar;
 
 import javax.inject.Inject;
 
+import com.ivanparraga.bscal.core.domain.Calendar;
+
 class CalendarLaoImpl implements CalendarLao {
 	private final CalendarDao dao;
 
@@ -11,20 +13,8 @@ class CalendarLaoImpl implements CalendarLao {
 	}
 
 	@Override
-	public Calendar createCalendar(Calendar calendar) {
-		// TODO Auto-generated method stub
+	public String createCalendar(Calendar calendar) {
+		dao.create(calendar);
 		return null;
 	}
-
-	/**
-	 * @see com.ivanparraga.bscal.core.calendar.CalendarLao#createCalendar(java.lang.String, short)
-	 */
-//	@Override
-//	public Calendar createCalendar(Calendar calendar) {
-//		Calendar calendar = new BasicCalendar(name, year);
-//		dao.create(calendar);
-//		return calendar;
-//	}
-
-
 }
