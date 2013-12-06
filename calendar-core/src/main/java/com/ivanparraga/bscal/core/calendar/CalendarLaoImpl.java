@@ -1,5 +1,7 @@
 package com.ivanparraga.bscal.core.calendar;
 
+import java.util.UUID;
+
 import javax.inject.Inject;
 
 import com.ivanparraga.bscal.core.domain.Calendar;
@@ -13,8 +15,14 @@ class CalendarLaoImpl implements CalendarLao {
 	}
 
 	@Override
-	public String createCalendar(Calendar calendar) {
+	public String create(Calendar calendar) {
+		String id = computeNewId();
+		calendar.setId(id);
 		dao.create(calendar);
-		return null;
+		return id;
+	}
+
+	private String computeNewId() {
+		return UUID.randomUUID().toString();
 	}
 }
