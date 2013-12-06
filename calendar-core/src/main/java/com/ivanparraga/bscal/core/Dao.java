@@ -18,7 +18,8 @@ public interface Dao<T extends Entity> {
 	T read(String id) throws PersistenceException;
 
 	/**
-	 * Deletes the specified entity.
+	 * Deletes the specified entity. If the entity doesn't exist, then the
+	 * method does nothing.
 	 */
 	void delete(String id) throws PersistenceException;
 }

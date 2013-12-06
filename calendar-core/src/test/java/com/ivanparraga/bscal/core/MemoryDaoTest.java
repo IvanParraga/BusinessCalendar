@@ -51,4 +51,21 @@ public class MemoryDaoTest {
 	public void readNotExisting() {
 		dao.read("whatever");
 	}
+
+	@Test
+	public void deleteNotExisting() {
+		dao.delete("whatever");
+	}
+
+	@Test(expectedExceptions = NoSuchObjectException.class,
+			expectedExceptionsMessageRegExp =
+			"Object with id \"foo\" cannot be found")
+	public void createDelete() {
+		String id = "foo";
+		when(domainObject.getId()).thenReturn(id);
+
+		dao.create(domainObject);
+		dao.delete(id);
+		dao.read(id);
+	}
 }

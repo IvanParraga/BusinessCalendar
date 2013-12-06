@@ -44,6 +44,6 @@ public class MemoryDao<T extends Entity> implements Dao<T> {
 
 	@Override
 	public void delete(String id) throws PersistenceException {
-
+		content.remove(id);
 	}
 }
