@@ -10,6 +10,10 @@
 		<artifactId>calendar-parent</artifactId>
 		<version>0.0-SNAPSHOT</version>
 	</parent>
+	
+	<properties>
+		<jersey.version>1.8</jersey.version>
+	</properties>
 
 	<build>
 		<plugins>
@@ -25,7 +29,12 @@
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-server</artifactId>
-			<version>1.8</version>
+			<version>${jersey.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-json</artifactId>
+			<version>${jersey.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
