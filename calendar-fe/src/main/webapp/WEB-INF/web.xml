@@ -3,24 +3,37 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
 	<display-name>BusinessCalendar</display-name>
-
-
-	<servlet>
-		<servlet-name>jersey-servlet</servlet-name>
-		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
-		<init-param>
-			<param-name>com.sun.jersey.config.property.packages</param-name>
-			<param-value>com.ivanparraga.bscal.rest.calendar</param-value>
-		</init-param>
-		<init-param>
-			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
-			<param-value>true</param-value>
-		</init-param>
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>jersey-servlet</servlet-name>
+	
+	<listener>
+		<listener-class>com.ivanparraga.bscal.rest.config.GuiceServletConfig</listener-class>
+	</listener>
+	
+	<filter>
+		<filter-name>GuiceFilter</filter-name>
+		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>GuiceFilter</filter-name>
 		<url-pattern>/*</url-pattern>
-	</servlet-mapping>
+	</filter-mapping>
+	
+	
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>jersey-servlet</servlet-name> -->
+<!-- 		<servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>com.sun.jersey.config.property.packages</param-name> -->
+<!-- 			<param-value>com.ivanparraga.bscal.rest.calendar</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<init-param> -->
+<!-- 			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name> -->
+<!-- 			<param-value>true</param-value> -->
+<!-- 		</init-param> -->
+<!-- 		<load-on-startup>1</load-on-startup> -->
+<!-- 	</servlet> -->
+
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>jersey-servlet</servlet-name> -->
+<!-- 		<url-pattern>/*</url-pattern> -->
+<!-- 	</servlet-mapping> -->
 </web-app>
