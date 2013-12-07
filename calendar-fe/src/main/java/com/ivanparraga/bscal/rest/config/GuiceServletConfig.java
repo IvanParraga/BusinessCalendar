@@ -1,7 +1,10 @@
 package com.ivanparraga.bscal.rest.config;
 
+import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
+
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Scopes;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.ivanparraga.bscal.core.calendar.CalendarGuiceModule;
 import com.ivanparraga.bscal.rest.calendar.CalendarRest;
@@ -18,14 +21,14 @@ public class GuiceServletConfig extends GuiceServletContextListener {
 				bind(CalendarRest.class);
 				install(new CalendarGuiceModule());
 
+				bind(JacksonJsonProvider.class).in(Scopes.SINGLETON);
+
 				// Route all requests through GuiceContainer
 				serve("/*").with(GuiceContainer.class);
 			}
 		};
 
-		Injector injector =  Guice.createInjector(servletModule);
-
-		return injector;
+		return  Guice.createInjector(servletModule);
 	}
 
 }

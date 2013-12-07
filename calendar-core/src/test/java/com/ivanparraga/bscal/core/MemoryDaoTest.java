@@ -10,8 +10,8 @@ import org.testng.annotations.Test;
 import com.ivanparraga.bscal.core.domain.Entity;
 
 public class MemoryDaoTest {
-	private Dao<Entity> dao;
-	private Entity domainObject;
+	private Dao<Entity<?>> dao;
+	private Entity<?> domainObject;
 
 	@BeforeMethod
 	public void init() {
@@ -25,7 +25,7 @@ public class MemoryDaoTest {
 		when(domainObject.getId()).thenReturn(id);
 
 		dao.create(domainObject);
-		Entity actualObject = dao.read(id);
+		Entity<?> actualObject = dao.read(id);
 
 		assertEquals(actualObject, domainObject);
 	}

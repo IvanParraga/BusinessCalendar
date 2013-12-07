@@ -1,30 +1,56 @@
 package com.ivanparraga.bscal.rest.calendar;
 
-
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.NotFoundException;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.ivanparraga.bscal.core.calendar.BasicCalendar;
+import com.ivanparraga.bscal.core.CalendarTransformer;
+import com.ivanparraga.bscal.core.NoSuchObjectException;
 import com.ivanparraga.bscal.core.calendar.CalendarLao;
 import com.ivanparraga.bscal.core.domain.Calendar;
 
 @Path("calendar")
 public class CalendarRest {
 	private final CalendarLao lao;
+	private final CalendarTransformer transformer;
 
 	@Inject
 	public CalendarRest(CalendarLao lao) {
 		this.lao = lao;
+		transformer = new CalendarTransformer();
 	}
 
+	/**
+	 * @return The requested Calendar as JSon
+	 */
 	@GET
+	@Path("{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Calendar read() {
-		Calendar c = new BasicCalendar("test", (short)2004);
-		lao.create(c);
-		return c;
+	public String read(@PathParam("id") String id) {
+		try {
+			Calendar calendar = lao.read(id);
+			return transformer.serialize(calendar);
+		} catch (NoSuchObjectException e) {
+			throw new NotFoundException("No calendar with id \"" + id + "\"");
+		}
+	}
+
+
+	/**
+	 * Creates the new Calendar.
+	 * @return The just created calendar (that can include more fields that
+	 * the calendar sent).
+	 */
+	@POST
+	@Produces(MediaType.APPLICATION_JSON)
+	public String create(String calendarToCreate) {
+		Calendar calendar = transformer.deserialize(calendarToCreate);
+		Calendar newCalendar = lao.create(calendar);
+		return transformer.serialize(newCalendar);
 	}
 }

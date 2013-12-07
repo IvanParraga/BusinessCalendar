@@ -1,7 +1,7 @@
 package com.ivanparraga.bscal.core.domain;
 
-public interface Calendar extends Entity {
+public interface Calendar extends Entity<Calendar> {
 	String getName();
 
-	short getYear();
+	int getYear();
 }

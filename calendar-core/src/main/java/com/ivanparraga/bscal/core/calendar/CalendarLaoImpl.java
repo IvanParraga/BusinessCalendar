@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 
+import com.ivanparraga.bscal.core.PersistenceException;
 import com.ivanparraga.bscal.core.domain.Calendar;
 
 class CalendarLaoImpl implements CalendarLao {
@@ -15,14 +16,21 @@ class CalendarLaoImpl implements CalendarLao {
 	}
 
 	@Override
-	public String create(Calendar calendar) {
+	public Calendar create(Calendar calendar) {
+		Calendar newCalendar = calendar.newClon();
 		String id = computeNewId();
-		calendar.setId(id);
-		dao.create(calendar);
-		return id;
+		newCalendar.setId(id);
+
+		dao.create(newCalendar);
+		return newCalendar;
 	}
 
 	private String computeNewId() {
 		return UUID.randomUUID().toString();
+	}
+
+	@Override
+	public Calendar read(String id) throws PersistenceException {
+		return dao.read(id);
 	}
 }
