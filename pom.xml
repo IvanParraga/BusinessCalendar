@@ -83,6 +83,6 @@
 
 	<modules>
 		<module>calendar-core</module>
-		<module>calendar-fe</module>
+		<module>calendar-api</module>
 	</modules>
 </project>
