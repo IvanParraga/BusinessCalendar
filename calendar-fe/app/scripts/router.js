@@ -2,7 +2,7 @@ define([
   'jquery',
   'underscore',
   'backbone',
-  'views/calendars/list',
+  'views/calendars/CalendarListView',
 ], function($, _, Backbone, CalendarListView){
   var AppRouter = Backbone.Router.extend({
     routes: {

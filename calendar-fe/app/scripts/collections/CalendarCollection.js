@@ -1,11 +1,12 @@
 define([
   'underscore',
   'backbone',
-  'models/calendar'
+  'models/CalendarModel'
 ], function(_, Backbone, CalendarModel){
   var CalendarCollection = Backbone.Collection.extend({
-    model: CalendarModel
+    model: CalendarModel,
+    url: '/calendar'
   });
   // You don't usually return a collection instantiated
-  return ProjectCollection;
+  return CalendarCollection;
 });

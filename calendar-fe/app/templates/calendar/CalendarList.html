@@ -1,0 +1,13 @@
+<html>
+<head>
+	<title>Calendars List</title>
+</head>
+<body>
+	Calendars List
+	<ul>
+		<% _.each(calendars, function(calendar){ %>
+		<li><%= calendar.name %> - <%= calendar.year %></li> 
+		<% }); %>
+	</ul>
+</body>
+</html>
