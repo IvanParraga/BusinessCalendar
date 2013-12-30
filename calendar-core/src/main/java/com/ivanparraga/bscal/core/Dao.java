@@ -5,7 +5,7 @@ import com.ivanparraga.bscal.core.domain.Entity;
 /**
  * Basic CRUD operations.
  */
-public interface Dao<T extends Entity> {
+public interface Dao<T extends Entity<?>> {
 	/**
 	 * Creates an entity on the persistence system. It must contain an id.
 	 */

@@ -1,5 +1,5 @@
 package com.ivanparraga.bscal.core.domain;
 
-public interface Employee extends Entity {
+public interface Employee extends Entity<Employee> {
 
 }
