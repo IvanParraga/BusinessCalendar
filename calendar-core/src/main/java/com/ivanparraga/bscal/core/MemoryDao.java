@@ -1,5 +1,6 @@
 package com.ivanparraga.bscal.core;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
@@ -64,7 +65,11 @@ public class MemoryDao<T extends Entity<?>> implements Dao<T> {
 	@Override
 	public Set<T> read() throws PersistenceException {
 		Set<T> entities = new HashSet<>();
-		entities.addAll(content.values());
+		Collection<T> allEntities = content.values();
+		entities.addAll(allEntities);
+
+		logger.debug("All entities recovered from memory {}", allEntities);
+
 		return entities;
 	}
 }
