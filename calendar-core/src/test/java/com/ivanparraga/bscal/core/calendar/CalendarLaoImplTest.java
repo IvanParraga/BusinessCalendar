@@ -7,6 +7,9 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.testng.annotations.Test;
 
 import com.ivanparraga.bscal.core.domain.Calendar;
@@ -39,5 +42,24 @@ public class CalendarLaoImplTest {
 
 		verify(dao).read(id);
 		assertEquals(actualCalendar, expectedCalendar);
+	}
+
+	@Test
+	public void readAll() {
+		CalendarDao dao = mock(CalendarDao.class);
+
+		Set<Calendar> expectedCalendars = new HashSet<>();
+		expectedCalendars.add(new BasicCalendar("foo", "fooName", 2004));
+		expectedCalendars.add(new BasicCalendar("boo", "booName", 2005));
+
+		when(dao.read()).thenReturn(expectedCalendars);
+		CalendarLao lao = new CalendarLaoImpl(dao);
+
+
+		Set<Calendar> actualCalendars = lao.read();
+
+
+		verify(dao).read();
+		assertEquals(actualCalendars, expectedCalendars);
 	}
 }

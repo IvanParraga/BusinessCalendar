@@ -1,5 +1,7 @@
 package com.ivanparraga.bscal.core.calendar;
 
+import java.util.Set;
+
 import com.ivanparraga.bscal.core.PersistenceException;
 import com.ivanparraga.bscal.core.domain.Calendar;
 
@@ -11,4 +13,9 @@ public interface CalendarLao {
 	Calendar create(Calendar calendar) throws PersistenceException;
 
 	Calendar read(String id) throws PersistenceException;
+
+	/**
+	 * @return A not null list of all the calendars
+	 */
+	Set<Calendar> read() throws PersistenceException;
 }

@@ -1,6 +1,9 @@
 package com.ivanparraga.bscal.core;
 
+import java.util.Set;
+
 import com.ivanparraga.bscal.core.domain.Entity;
+
 
 /**
  * Basic CRUD operations.
@@ -16,6 +19,11 @@ public interface Dao<T extends Entity<?>> {
 	 * 	stored
 	 */
 	T read(String id) throws PersistenceException;
+
+	/**
+	 * @return All the entities.
+	 */
+	Set<T> read() throws PersistenceException;
 
 	/**
 	 * Deletes the specified entity. If the entity doesn't exist, then the

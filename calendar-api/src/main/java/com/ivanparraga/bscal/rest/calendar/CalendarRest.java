@@ -1,5 +1,7 @@
 package com.ivanparraga.bscal.rest.calendar;
 
+import java.util.Set;
+
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
@@ -52,5 +54,15 @@ public class CalendarRest {
 		Calendar calendar = transformer.deserialize(calendarToCreate);
 		Calendar newCalendar = lao.create(calendar);
 		return transformer.serialize(newCalendar);
+	}
+
+	/**
+	 * @return An array of all the JSon calendars for which the user has access
+	 */
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public String read() {
+		Set<Calendar> calendars = lao.read();
+		return transformer.serialize(calendars);
 	}
 }

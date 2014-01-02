@@ -4,6 +4,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -28,6 +31,27 @@ public class MemoryDaoTest {
 		Entity<?> actualObject = dao.read(id);
 
 		assertEquals(actualObject, domainObject);
+	}
+
+	@Test
+	public void readAllExisting() {
+		Entity<?> foo = getMockEntityWithId("foo");
+		dao.create(foo);
+		Entity<?> boo = getMockEntityWithId("boo");
+		dao.create(boo);
+
+		Set<Entity<?>> actualEntities = dao.read();
+
+		Set<Entity<?>> entities = new HashSet<>();
+		entities.add(foo);
+		entities.add(boo);
+		assertEquals(actualEntities, entities);
+	}
+
+	private Entity<?> getMockEntityWithId(String id) {
+		Entity<?> entity = mock(Entity.class);
+		when(entity.getId()).thenReturn(id);
+		return entity;
 	}
 
 	@Test(expectedExceptions = PersistenceException.class,

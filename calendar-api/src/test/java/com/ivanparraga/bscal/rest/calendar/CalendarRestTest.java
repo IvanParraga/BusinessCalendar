@@ -4,6 +4,9 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.ws.rs.NotFoundException;
 
 import org.json.JSONException;
@@ -44,6 +47,22 @@ public class CalendarRestTest {
 		when(lao.read(id)).thenThrow(new NoSuchObjectException(""));
 
 		rest.read(id);
+	}
+
+	@Test
+	public void readAllExisting() throws JSONException {
+		Set<Calendar> calendars = new HashSet<>();
+		calendars.add(new BasicCalendar("foo", "fooName", 2004));
+		calendars.add(new BasicCalendar("boo", "booName", 2005));
+		when(lao.read()).thenReturn(calendars);
+
+		String actualCalendar = rest.read();
+
+		String expected = "["
+				+ "{id:\"foo\",name:\"fooName\",year:2004},"
+				+ "{id:\"boo\",name:\"booName\",year:2005}"
+				+ "]";
+		JSONAssert.assertEquals(expected, actualCalendar, false);
 	}
 
 	@Test

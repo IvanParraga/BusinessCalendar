@@ -1,5 +1,6 @@
 package com.ivanparraga.bscal.core.calendar;
 
+import java.util.Set;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -32,5 +33,10 @@ class CalendarLaoImpl implements CalendarLao {
 	@Override
 	public Calendar read(String id) throws PersistenceException {
 		return dao.read(id);
+	}
+
+	@Override
+	public Set<Calendar> read() throws PersistenceException {
+		return dao.read();
 	}
 }

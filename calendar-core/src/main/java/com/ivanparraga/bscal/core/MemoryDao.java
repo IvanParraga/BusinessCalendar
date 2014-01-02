@@ -1,7 +1,9 @@
 package com.ivanparraga.bscal.core;
 
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,5 +59,12 @@ public class MemoryDao<T extends Entity<?>> implements Dao<T> {
 		content.remove(id);
 
 		logger.debug("{} deleted from memory", id);
+	}
+
+	@Override
+	public Set<T> read() throws PersistenceException {
+		Set<T> entities = new HashSet<>();
+		entities.addAll(content.values());
+		return entities;
 	}
 }

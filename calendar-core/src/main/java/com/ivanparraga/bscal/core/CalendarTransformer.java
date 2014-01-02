@@ -1,7 +1,9 @@
 package com.ivanparraga.bscal.core;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.Set;
 
 import com.ivanparraga.bscal.core.calendar.BasicCalendar;
 import com.ivanparraga.bscal.core.domain.Calendar;
@@ -26,6 +28,16 @@ public class CalendarTransformer extends JsonTransformer<Calendar> {
 		} catch (IOException e) {
 			throw new JsonException(
 				"I cannot deserialize \"" + calendar + "\"", e);
+		}
+	}
+
+	public String serialize(Set<Calendar> calendars) {
+		try {
+			return mapper.writeValueAsString(calendars);
+		} catch (IOException e) {
+			throw new JsonException(
+				"I couldn't convert "
+				+ Arrays.toString(calendars.toArray()) + " to JSon", e);
 		}
 	}
 }
