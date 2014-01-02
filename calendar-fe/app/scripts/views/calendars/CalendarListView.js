@@ -5,12 +5,13 @@ define  ([
   'models/CalendarModel',
   'collections/CalendarCollection',
   'text!templates/calendar/CalendarList.html'
-], function($, _, Backbone, CalendarModel, CalendarCollection, calendarListTemplate){
+], function($, _, Backbone, CalendarModel, CalendarCollection, calendarListTemplate) {
+  calendars = new CalendarCollection().fetch();
   var CalendarListView = Backbone.View.extend({
-    el: $('#container'),
+    el: $('#container'),    
     render: function(){
       var data = {
-        calendars: [{name:'a',year:1999}]
+        calendars: calendars
       };
       var compiledTemplate = _.template(calendarListTemplate, data);
       this.$el.append(compiledTemplate);
