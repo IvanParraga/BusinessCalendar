@@ -33,13 +33,13 @@ define([
    
     calendarCollection = bootstrapCallendars();
 
-    app_router.on('route:showCalendars', function(){
+    app_router.on('route:showCalendars', function() {
       var calendarListView = new CalendarListView({calendars: calendarCollection});
       calendarListView.render();
     });
 
-    app_router.on('route:editCalendar', function(){
-      var calendarEditView = new CalendarEditView();
+    app_router.on('route:editCalendar', function() {
+      var calendarEditView = new CalendarEditView({calendars: calendarCollection});
       calendarEditView.render();
     });
 

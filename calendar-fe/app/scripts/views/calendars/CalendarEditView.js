@@ -3,15 +3,14 @@ define  ([
   'underscore',
   'backbone',
   'models/CalendarModel',
-  'collections/CalendarCollection',
   'text!templates/calendar/CalendarEdit.html'
-], function($, _, Backbone, CalendarModel, CalendarCollection, calendarEditTemplate){
+], function($, _, Backbone, CalendarModel, calendarEditTemplate){
   var CalendarEditView = Backbone.View.extend({
     el: $('#container'),    
     render: function(){
       url = Backbone.history.fragment;
       id = url.split('/')[1];
-      calendar = new CalendarCollection().get(id);
+      calendar = this.options.calendars.get(id);
       var data = {
         calendar: calendar
       };

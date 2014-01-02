@@ -1,34 +1,22 @@
-<html lang="en"> 
-    <head> 
-        <title>Edit calendar</title>  
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"> 
-    </head>
-    <body>
-        <br/><br/>
-        <div class="container">
-            <div class="page"></div>
-        </div>
+<body>
+ <form class="calendarcollection-edit-form">
+  <legend><%= calendar ? 'Edit' : 'New' %></legend>
+  <label>name</label>
+  <input name="name" type="text" value="<%= calendar ? calendar.get('name') : '' %>"> 
+  <label>year</label>
+  <input name="year" type="text" value="<%= calendar ? calendar.get('year') : '' %>"> 
+  <label>holidays</label>
+  <input name="holidays" type="text" value="<%= calendar ? calendar.get('holidays') : '' %>"> 
 
-    <hr />
-    <table class="table striped">
-      <thead>
-        <tr>
-          <th>name</th>
-          <th>year</th>
-          <th>holidays</th>
-          
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-
-        <tr>
-          <td><%= calendar.name %></td> 
-          <td><%= calendar.year %></td> 
-          <td><%= calendar.holidays %></td> 
-        </tr>
-
-      </tbody>
-    </table>
-    </body>
-</html>    
+  <hr />
+  <input type="submit" class="btn" value="<%= calendar ? 'Update' : 'Create' %>" />
+  <% if (calendar) { %>
+  <input type="hidden" name="id" value="<%= calendar.id %>" />
+  <input type="button" class="btn btn-danger delete" value="Delete" /> 
+  <% }; %>
+  <form action="/#calendars">
+    <input type="button" class="btn cancel" value="Back" />
+  </form> 
+</form>
+</body>
+</html>
