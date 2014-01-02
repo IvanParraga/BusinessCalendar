@@ -3,15 +3,13 @@ define  ([
   'underscore',
   'backbone',
   'models/CalendarModel',
-  'collections/CalendarCollection',
   'text!templates/calendar/CalendarList.html'
-], function($, _, Backbone, CalendarModel, CalendarCollection, calendarListTemplate) {
-  calendars = new CalendarCollection().fetch();
+], function($, _, Backbone, CalendarModel, calendarListTemplate) {
   var CalendarListView = Backbone.View.extend({
     el: $('#container'),    
-    render: function(){
+    render: function() {
       var data = {
-        calendars: calendars
+        calendars: this.options.calendars.toJSON()
       };
       var compiledTemplate = _.template(calendarListTemplate, data);
       this.$el.append(compiledTemplate);
