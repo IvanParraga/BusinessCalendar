@@ -18,4 +18,9 @@ public interface CalendarLao {
 	 * @return A not null list of all the calendars
 	 */
 	Set<Calendar> read() throws PersistenceException;
+
+	/**
+	 * @param id the calendar id to delete
+	 */
+	void delete(String id);
 }

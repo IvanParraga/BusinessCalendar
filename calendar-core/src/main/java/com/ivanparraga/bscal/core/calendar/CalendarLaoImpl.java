@@ -39,4 +39,9 @@ class CalendarLaoImpl implements CalendarLao {
 	public Set<Calendar> read() throws PersistenceException {
 		return dao.read();
 	}
+
+	@Override
+	public void delete(String id) throws PersistenceException {
+		dao.delete(id);
+	}
 }

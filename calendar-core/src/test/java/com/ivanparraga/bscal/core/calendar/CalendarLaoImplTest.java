@@ -62,4 +62,15 @@ public class CalendarLaoImplTest {
 		verify(dao).read();
 		assertEquals(actualCalendars, expectedCalendars);
 	}
+
+	@Test
+	public void delete() {
+		String id = "foo";
+		CalendarDao dao = mock(CalendarDao.class);
+		CalendarLao lao = new CalendarLaoImpl(dao);
+
+		lao.delete(id);
+
+		verify(dao).delete(id);
+	}
 }

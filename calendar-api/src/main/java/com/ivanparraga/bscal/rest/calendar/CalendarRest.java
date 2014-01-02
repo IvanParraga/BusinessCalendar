@@ -3,6 +3,7 @@ package com.ivanparraga.bscal.rest.calendar;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
@@ -64,5 +65,15 @@ public class CalendarRest {
 	public String read() {
 		Set<Calendar> calendars = lao.read();
 		return transformer.serialize(calendars);
+	}
+
+	/**
+	 * @return The requested Calendar as JSon
+	 */
+	@DELETE
+	@Path("{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public void delete(@PathParam("id") String id) {
+		lao.delete(id);
 	}
 }

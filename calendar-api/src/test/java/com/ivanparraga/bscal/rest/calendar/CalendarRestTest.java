@@ -82,4 +82,13 @@ public class CalendarRestTest {
 		String expected = "{id:\"" + id + "\",name:\"" + calendarName + "\",year:" + year + "}";
 		JSONAssert.assertEquals(expected, actualCalendar, false);
 	}
+
+	@Test
+	public void delete() throws JSONException {
+		String id = "foo";
+
+		rest.delete(id);
+
+		verify(lao).delete(id);
+	}
 }
