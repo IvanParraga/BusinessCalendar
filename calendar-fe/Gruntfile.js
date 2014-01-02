@@ -6,6 +6,8 @@ var mountFolder = function (connect, dir) {
     return connect.static(require('path').resolve(dir));
 };
 
+
+
 // # Globbing
 // for performance reasons we're only matching one level down:
 // 'test/spec/{,*/}*.js'
@@ -14,6 +16,8 @@ var mountFolder = function (connect, dir) {
 // templateFramework: 'lodash'
 
 module.exports = function (grunt) {
+    grunt.loadNpmTasks('grunt-connect-proxy');
+
     // show elapsed time at the end
     require('time-grunt')(grunt);
     // load all grunt tasks
@@ -70,13 +74,27 @@ module.exports = function (grunt) {
                 // change this to '0.0.0.0' to access the server from outside
                 hostname: 'localhost'
             },
+            proxies: [
+                {
+                    context: '/server',
+                    host: '127.0.0.1',
+                    port: 8080,
+                    https: false,
+                    changeOrigin: false,
+                    xforward: false,
+                    rewrite: {
+                        '^/server': ''
+                    }
+                }
+            ],
             livereload: {
                 options: {
                     middleware: function (connect) {
                         return [
                             lrSnippet,
                             mountFolder(connect, '.tmp'),
-                            mountFolder(connect, yeomanConfig.app)
+                            mountFolder(connect, yeomanConfig.app),
+                            require('grunt-connect-proxy/lib/utils').proxyRequest
                         ];
                     }
                 }
@@ -303,6 +321,7 @@ module.exports = function (grunt) {
             'coffee:dist',
             'createDefaultTemplate',
             'jst',
+            'configureProxies:server',
             'connect:livereload',
             'open',
             'watch'
