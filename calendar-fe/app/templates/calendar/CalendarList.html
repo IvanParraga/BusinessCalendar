@@ -1,36 +1,24 @@
-<html> 
-    <head> 
-        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"> 
-    </head>
-    <body>
-        <br/><br/>
-        <div class="container">
-            <div class="page"></div>
-        </div>
-
-    <a href="#/calendarcollection_new" class="btn btn-primary">New</a>
-    <hr />
-    <table class="table striped">
-      <thead>
-        <tr>
-          <th>name</th>
-          <th>year</th>
-          <th>holidays</th>
-          
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-      <% _.each(calendars, function(calendar) { %>
-        <tr>
-          <td><%= calendar.name %></td> 
-          <td><%= calendar.year %></td> 
-          <td><%= calendar.holidays %></td> 
-          
-          <td><a class="btn" href="#edit_calendar/<%= calendar.id %>">Edit</a></td>
-        </tr>
-      <% }); %>
-      </tbody>
-    </table>
-    </body>
-</html>    
+<a href="#/calendarcollection_new" class="btn btn-primary">New</a>
+<hr />
+<table class="table striped">
+  <thead>
+    <tr>
+      <th>name</th>
+      <th>year</th>
+      <th>holidays</th>
+      
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% _.each(calendars, function(calendar) { %>
+    <tr>
+      <td><%= calendar.name %></td> 
+      <td><%= calendar.year %></td> 
+      <td><%= calendar.holidays %></td> 
+      
+      <td><a class="btn" href="#edit_calendar/<%= calendar.id %>">Edit</a></td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
