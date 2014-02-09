@@ -23,8 +23,8 @@ define  ([
     createItem : function (event) {    
       calendars = this.options.calendars;
       calendars.create({
-          name: $('#name'),
-          year: $('#year')
+          name: $('#name').val(),
+          year: $('#year').val()
       });
     }
   });
