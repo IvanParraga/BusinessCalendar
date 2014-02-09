@@ -7,7 +7,10 @@ define  ([
 ], function($, _, Backbone, CalendarModel, calendarEditTemplate){
   var CalendarEditView = Backbone.View.extend({
     el: $('#container'),    
-    render: function(){
+    events: {
+         'click .create': 'createItem'
+    },
+    render: function() {
       url = Backbone.history.fragment;
       id = url.split('/')[1];
       calendar = this.options.calendars.get(id);
@@ -16,6 +19,13 @@ define  ([
       };
       var compiledTemplate = _.template(calendarEditTemplate, data);
       this.$el.append(compiledTemplate);
+    },
+    createItem : function (event) {    
+      calendars = this.options.calendars;
+      calendars.create({
+          name: $('#name'),
+          year: $('#year')
+      });
     }
   });
   return CalendarEditView;

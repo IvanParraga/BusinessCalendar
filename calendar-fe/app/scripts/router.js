@@ -10,6 +10,7 @@ define([
     routes: {
       // Define some URL routes
       'calendars': 'showCalendars',
+      'new_calendar': 'editCalendar',
       'edit_calendar/:id': 'editCalendar'
     }
   });

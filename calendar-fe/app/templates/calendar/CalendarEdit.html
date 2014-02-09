@@ -9,7 +9,7 @@
   <input name="holidays" type="text" value="<%= calendar ? calendar.get('holidays') : '' %>"> 
 
   <hr />
-  <input type="submit" class="btn" value="<%= calendar ? 'Update' : 'Create' %>" />
+  <input type="button" class="btn create" value="<%= calendar ? 'Update' : 'Create' %>" />
   <% if (calendar) { %>
   <input type="hidden" name="id" value="<%= calendar.id %>" />
   <input type="button" class="btn btn-danger delete" value="Delete" /> 
