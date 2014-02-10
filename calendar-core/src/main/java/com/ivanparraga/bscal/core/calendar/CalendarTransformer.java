@@ -1,11 +1,12 @@
-package com.ivanparraga.bscal.core;
+package com.ivanparraga.bscal.core.calendar;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 
-import com.ivanparraga.bscal.core.calendar.BasicCalendar;
+import com.ivanparraga.bscal.core.JsonException;
+import com.ivanparraga.bscal.core.JsonTransformer;
 import com.ivanparraga.bscal.core.domain.Calendar;
 
 public class CalendarTransformer extends JsonTransformer<Calendar> {
@@ -23,8 +24,10 @@ public class CalendarTransformer extends JsonTransformer<Calendar> {
 	public Calendar deserialize(String calendar) {
 		try {
 			@SuppressWarnings("unchecked")
-			Map<String,Object> map = mapper.readValue(calendar, Map.class);
-			return new BasicCalendar((String)map.get("name"), (int)map.get("year"));
+			Map<String,Object> properties = mapper.readValue(calendar, Map.class);
+			String name = getRequiredProperty(String.class, properties, "name");
+			int year = getRequiredProperty(Integer.class, properties, "year");
+			return new BasicCalendar(name, year);
 		} catch (IOException e) {
 			throw new JsonException(
 				"I cannot deserialize \"" + calendar + "\"", e);

@@ -4,12 +4,14 @@ define  ([
   'backbone',
   'models/CalendarModel',
   'text!templates/calendar/CalendarEdit.html'
-], function($, _, Backbone, CalendarModel, calendarEditTemplate){
+], function($, _, Backbone, CalendarModel, calendarEditTemplate) {
   var CalendarEditView = Backbone.View.extend({
     el: $('#container'),    
+
     events: {
          'click .create': 'createItem'
     },
+
     render: function() {
       url = Backbone.history.fragment;
       id = url.split('/')[1];
@@ -20,6 +22,7 @@ define  ([
       var compiledTemplate = _.template(calendarEditTemplate, data);
       this.$el.append(compiledTemplate);
     },
+
     createItem : function (event) {    
       calendars = this.options.calendars;
       calendars.create({
@@ -28,5 +31,6 @@ define  ([
       });
     }
   });
+
   return CalendarEditView;
 });

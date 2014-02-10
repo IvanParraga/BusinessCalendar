@@ -3,11 +3,14 @@ package com.ivanparraga.bscal.rest.calendar;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.WebApplicationException;
 
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
@@ -76,11 +79,33 @@ public class CalendarRestTest {
 
 		String calendarToCreate =
 				"{\"name\":\"" + calendarName + "\",\"year\":" + year + "}";
+
 		String actualCalendar = rest.create(calendarToCreate);
 
+
 		verify(lao).create(passedCalendar);
-		String expected = "{id:\"" + id + "\",name:\"" + calendarName + "\",year:" + year + "}";
+
+
+		String expected = "{id:\"" + id + "\",name:\""
+				+ calendarName + "\",year:" + year + "}";
+
 		JSONAssert.assertEquals(expected, actualCalendar, false);
+	}
+
+	@Test
+	public void createNullName() throws JSONException {
+		int year = 2004;
+
+		String calendarToCreate = "{\"year\":" + year + "}";
+
+		try {
+			rest.create(calendarToCreate);
+			fail();
+		} catch (WebApplicationException e) {
+			int expectedStatus = 400;
+			int actualStatus = e.getResponse().getStatus();
+			assertEquals(actualStatus, expectedStatus);
+		}
 	}
 
 	@Test
