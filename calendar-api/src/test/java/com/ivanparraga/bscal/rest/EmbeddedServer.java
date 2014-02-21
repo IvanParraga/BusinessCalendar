@@ -10,14 +10,21 @@ import org.slf4j.LoggerFactory;
 
 import com.google.inject.servlet.GuiceFilter;
 import com.ivanparraga.bscal.rest.config.GuiceServletConfig;
+import com.ivanparraga.bscal.rest.config.JaxRsApplication;
 
 public class EmbeddedServer {
 	private static Logger logger = LoggerFactory
 			.getLogger(EmbeddedServer.class);
 
-	private static final String JERSEY_SERVLET_APPLICATION_INIT_PARAM = "javax.ws.rs.Application";
+	private static final String JERSEY_SERVLET_APPLICATION_INIT_PARAM_NAME
+			= "javax.ws.rs.Application";
+
+	private static final String JERSEY_APPLICATION_INIT_PARAM_VALUE
+			= JaxRsApplication.class.getName();
 
 	public static final int PORT = 9999;
+	public static final String CONTEXT = "/";
+
 	private Server server;
 	private ServletContextHandler context;
 
@@ -26,7 +33,7 @@ public class EmbeddedServer {
 		server = new Server(PORT);
 
 		// Create a servlet context and add the jersey servlet.
-		context = new ServletContextHandler(server, "/");
+		context = new ServletContextHandler(server, CONTEXT);
 
 		initializeGuice();
 		initializeJersey();
@@ -48,12 +55,13 @@ public class EmbeddedServer {
 	}
 
 	private void initializeJersey() {
-		// Initialize and register Jersey ServletContainer
+		String urlPattern = "/*";
 		ServletHolder servletHolder =
-				context.addServlet(ServletContainer.class, "/*");
+				context.addServlet(ServletContainer.class, urlPattern);
 
-		servletHolder.setInitParameter(JERSEY_SERVLET_APPLICATION_INIT_PARAM,
-				"example.jersey.MyApplication");
+		servletHolder.setInitParameter(
+				JERSEY_SERVLET_APPLICATION_INIT_PARAM_NAME,
+				JERSEY_APPLICATION_INIT_PARAM_VALUE);
 	}
 
 	public void stop() throws Exception {
