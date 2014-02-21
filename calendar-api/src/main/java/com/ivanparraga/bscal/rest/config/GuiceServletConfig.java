@@ -4,6 +4,7 @@ import org.codehaus.jackson.jaxrs.JacksonJsonProvider;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Module;
 import com.google.inject.Scopes;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
@@ -19,13 +20,9 @@ public class GuiceServletConfig extends GuiceServletContextListener {
 			@Override
 			protected void configureServlets() {
 				bind(CalendarRest.class);
-				install(new CalendarGuiceModule());
+				install(getModule());
 
 				bind(JacksonJsonProvider.class).in(Scopes.SINGLETON);
-
-				// Route all requests through GuiceContainer
-//				serve("/*").with(GuiceContainer.class);
-//				serve("/*").with()
 			}
 		};
 
@@ -33,4 +30,7 @@ public class GuiceServletConfig extends GuiceServletContextListener {
 		return injector;
 	}
 
+	protected Module getModule() {
+		return new CalendarGuiceModule();
+	}
 }

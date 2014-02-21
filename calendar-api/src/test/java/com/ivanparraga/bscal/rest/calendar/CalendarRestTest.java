@@ -15,14 +15,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONException;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.AfterMethod;
 
+import com.google.inject.AbstractModule;
+import com.google.inject.Module;
 import com.ivanparraga.bscal.core.NoSuchObjectException;
 import com.ivanparraga.bscal.core.calendar.BasicCalendar;
 import com.ivanparraga.bscal.core.calendar.CalendarLao;
@@ -38,15 +39,17 @@ public class CalendarRestTest {
 	private CalendarLao lao;
 	private CalendarRest rest;
 
-	@BeforeClass
-	public static void startServer() throws Exception {
-		server = new EmbeddedServer();
+	public void startServer(CalendarLao lao) throws Exception {
+		Module module = getModule(lao);
+		server = new EmbeddedServer(module);
 		server.start();
 	}
 
-	@AfterClass
-	public static void stopServer() throws Exception {
-		server.stop();
+	@AfterMethod
+	public void stopServer() throws Exception {
+		if (server != null) {
+			server.stop();
+		}
 	}
 
 	@Before
@@ -133,6 +136,8 @@ public class CalendarRestTest {
 
 	@Test
 	public void createNullName() throws Exception {
+		CalendarLao lao = mock(CalendarLao.class);
+		startServer(lao);
 		int year = 2004;
 
 		String calendarToCreate = "{\"year\":" + year + "}";
@@ -148,6 +153,15 @@ public class CalendarRestTest {
 		int expectedStatus = 400;
 		int actualStatus = response.getStatus();
 		assertEquals(expectedStatus, actualStatus);
+	}
+
+	private Module getModule(final CalendarLao lao) {
+		return new AbstractModule() {
+			@Override
+			protected void configure() {
+				bind(CalendarLao.class).toInstance(lao);
+			}
+		};
 	}
 
 	@Test
