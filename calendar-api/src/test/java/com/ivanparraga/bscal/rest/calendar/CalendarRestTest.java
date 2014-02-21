@@ -137,9 +137,8 @@ public class CalendarRestTest {
 
 		logger.debug("Response: " + response);
 
-		int expectedStatus = 400;
-		int actualStatus = response.getStatus();
-		assertEquals(expectedStatus, actualStatus);
+		assertCode(400, response);
+		assertMessage("Missing required property name", response);
 	}
 
 	@Test
@@ -147,7 +146,8 @@ public class CalendarRestTest {
 		startServer(mock(CalendarLao.class));
 
 		String calendarToCreate = "a";
-		Entity<String> userEntity = Entity.entity(calendarToCreate, MediaType.APPLICATION_JSON);
+		Entity<String> userEntity = Entity.entity(
+				calendarToCreate, MediaType.APPLICATION_JSON);
 
 		String url = "http://localhost:" + EmbeddedServer.PORT + "/calendar";
 
@@ -159,9 +159,18 @@ public class CalendarRestTest {
 
 		logger.debug("Response: " + response);
 
-		int expectedStatus = 500;
+		assertCode(500, response);
+		assertMessage("Internal server error", response);
+	}
+
+	private void assertCode(int expectedStatus, Response response) {
 		int actualStatus = response.getStatus();
 		assertEquals(expectedStatus, actualStatus);
+	}
+
+	private void assertMessage(String expectedMessage, Response response) {
+		String actualMessage = response.readEntity(String.class);
+		assertEquals(expectedMessage, actualMessage);
 	}
 
 	private Module getModule(final CalendarLao lao) {
