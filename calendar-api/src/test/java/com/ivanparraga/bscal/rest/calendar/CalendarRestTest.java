@@ -15,12 +15,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.json.JSONException;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.testng.annotations.AfterMethod;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Module;
@@ -45,7 +45,7 @@ public class CalendarRestTest {
 		server.start();
 	}
 
-	@AfterMethod
+	@After
 	public void stopServer() throws Exception {
 		if (server != null) {
 			server.stop();
@@ -118,26 +118,10 @@ public class CalendarRestTest {
 		JSONAssert.assertEquals(expected, actualCalendar, false);
 	}
 
-//	@Test
-//	public void createNullName() throws JSONException {
-//		int year = 2004;
-//
-//		String calendarToCreate = "{\"year\":" + year + "}";
-//
-//		try {
-//			rest.create(calendarToCreate);
-//			fail();
-//		} catch (WebApplicationException e) {
-//			int expectedStatus = 400;
-//			int actualStatus = e.getResponse().getStatus();
-//			assertEquals(actualStatus, expectedStatus);
-//		}
-//	}
 
 	@Test
 	public void createNullName() throws Exception {
-		CalendarLao lao = mock(CalendarLao.class);
-		startServer(lao);
+		startServer(mock(CalendarLao.class));
 		int year = 2004;
 
 		String calendarToCreate = "{\"year\":" + year + "}";
@@ -154,6 +138,28 @@ public class CalendarRestTest {
 		logger.debug("Response: " + response);
 
 		int expectedStatus = 400;
+		int actualStatus = response.getStatus();
+		assertEquals(expectedStatus, actualStatus);
+	}
+
+	@Test
+	public void createBadFormatted() throws Exception {
+		startServer(mock(CalendarLao.class));
+
+		String calendarToCreate = "a";
+		Entity<String> userEntity = Entity.entity(calendarToCreate, MediaType.APPLICATION_JSON);
+
+		String url = "http://localhost:" + EmbeddedServer.PORT + "/calendar";
+
+		Response response =
+				ClientBuilder.newClient()
+				.target(url)
+				.request()
+				.post(userEntity);
+
+		logger.debug("Response: " + response);
+
+		int expectedStatus = 500;
 		int actualStatus = response.getStatus();
 		assertEquals(expectedStatus, actualStatus);
 	}
