@@ -145,9 +145,12 @@ public class CalendarRestTest {
 
 		String url = "http://localhost:" + EmbeddedServer.PORT + "/calendar";
 
-		logger.debug("GET {}", url);
+		Response response =
+				ClientBuilder.newClient()
+				.target(url)
+				.request()
+				.post(userEntity);
 
-		Response response = ClientBuilder.newClient().target(url).request().get();
 		logger.debug("Response: " + response);
 
 		int expectedStatus = 400;

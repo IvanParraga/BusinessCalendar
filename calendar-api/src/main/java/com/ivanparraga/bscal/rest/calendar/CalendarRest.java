@@ -10,10 +10,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
-import com.ivanparraga.bscal.core.JsonMissingRequiredPropertyException;
 import com.ivanparraga.bscal.core.NoSuchObjectException;
 import com.ivanparraga.bscal.core.calendar.CalendarLao;
 import com.ivanparraga.bscal.core.calendar.CalendarTransformer;
@@ -81,10 +79,6 @@ public class CalendarRest {
 	}
 
 	private Calendar getFromRequest(String calendar) {
-		try {
-			return transformer.deserialize(calendar);
-		} catch (JsonMissingRequiredPropertyException e) {
-			throw new WebApplicationException();
-		}
+		return transformer.deserialize(calendar);
 	}
 }
