@@ -6,16 +6,15 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Scopes;
 import com.google.inject.servlet.GuiceServletContextListener;
+import com.google.inject.servlet.ServletModule;
 import com.ivanparraga.bscal.core.calendar.CalendarGuiceModule;
 import com.ivanparraga.bscal.rest.calendar.CalendarRest;
-import com.sun.jersey.guice.JerseyServletModule;
-import com.sun.jersey.guice.spi.container.servlet.GuiceContainer;
 
 public class GuiceServletConfig extends GuiceServletContextListener {
 
 	@Override
 	protected Injector getInjector() {
-		JerseyServletModule servletModule = new JerseyServletModule() {
+		ServletModule servletModule = new ServletModule() {
 			@Override
 			protected void configureServlets() {
 				bind(CalendarRest.class);
@@ -24,7 +23,7 @@ public class GuiceServletConfig extends GuiceServletContextListener {
 				bind(JacksonJsonProvider.class).in(Scopes.SINGLETON);
 
 				// Route all requests through GuiceContainer
-				serve("/*").with(GuiceContainer.class);
+//				serve("/*").with(GuiceContainer.class);
 			}
 		};
 

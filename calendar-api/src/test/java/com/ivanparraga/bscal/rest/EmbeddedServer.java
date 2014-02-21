@@ -1,15 +1,24 @@
-package com.ivanparraga.bscal.rest.config;
+package com.ivanparraga.bscal.rest;
 
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.inject.servlet.GuiceFilter;
+import com.ivanparraga.bscal.rest.config.GuiceServletConfig;
 
-public class TestDeploy {
-	public void testEnv() throws Exception {
+public class EmbeddedServer {
+	private static Logger logger = LoggerFactory.getLogger(EmbeddedServer.class);
+
+	public static final int PORT = 999;
+
+	private Server server;
+
+	public void start() throws Exception {
 		// Create the server.
-		Server server = new Server(8080);
+		server = new Server(PORT);
 
 		// Create a servlet context and add the jersey servlet.
 		ServletContextHandler sch = new ServletContextHandler(server, "/");
@@ -28,6 +37,13 @@ public class TestDeploy {
 
 		// Start the server
 		server.start();
-		server.join();
+
+		logger.debug("Server started");
+	}
+
+	public void stop() throws Exception {
+		server.stop();
+
+		logger.debug("Server stopped");
 	}
 }

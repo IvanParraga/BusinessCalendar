@@ -18,7 +18,7 @@ import com.ivanparraga.bscal.core.NoSuchObjectException;
 import com.ivanparraga.bscal.core.calendar.CalendarLao;
 import com.ivanparraga.bscal.core.calendar.CalendarTransformer;
 import com.ivanparraga.bscal.core.domain.Calendar;
-import com.sun.jersey.api.Responses;
+
 
 @Path("calendar")
 public class CalendarRest {
@@ -84,10 +84,7 @@ public class CalendarRest {
 		try {
 			return transformer.deserialize(calendar);
 		} catch (JsonMissingRequiredPropertyException e) {
-			throw new WebApplicationException(Responses
-					.clientError()
-					.entity(e.getMessage())
-					.build());
+			throw new WebApplicationException();
 		}
 	}
 }

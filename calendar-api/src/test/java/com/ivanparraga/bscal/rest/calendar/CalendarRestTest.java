@@ -9,32 +9,47 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.ws.rs.NotFoundException;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.Application;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.glassfish.jersey.server.ResourceConfig;
-import org.glassfish.jersey.test.JerseyTest;
 import org.json.JSONException;
+import org.junit.AfterClass;
+import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ivanparraga.bscal.core.NoSuchObjectException;
 import com.ivanparraga.bscal.core.calendar.BasicCalendar;
 import com.ivanparraga.bscal.core.calendar.CalendarLao;
 import com.ivanparraga.bscal.core.domain.Calendar;
+import com.ivanparraga.bscal.rest.EmbeddedServer;
 
-public class CalendarRestTest extends JerseyTest {
+public class CalendarRestTest {
+	private static final Logger logger =
+			LoggerFactory.getLogger(CalendarRestTest.class);
+
+	private static EmbeddedServer server;
+
 	private CalendarLao lao;
 	private CalendarRest rest;
 
-	@Override
-	protected Application configure() {
-		return new ResourceConfig(CalendarRest.class);
+	@BeforeClass
+	public static void startServer() throws Exception {
+		server = new EmbeddedServer();
+		server.start();
 	}
 
-//	@Before
+	@AfterClass
+	public static void stopServer() throws Exception {
+		server.stop();
+	}
+
+	@Before
 	public void init() {
 		lao = mock(CalendarLao.class);
 		rest = new CalendarRest(lao);
@@ -123,11 +138,16 @@ public class CalendarRestTest extends JerseyTest {
 		String calendarToCreate = "{\"year\":" + year + "}";
 		Entity<String> userEntity = Entity.entity(calendarToCreate, MediaType.APPLICATION_JSON);
 
-//		Response response = target("calendar").request().post(userEntity);
-		Response response = target("calendar").request().get();
+//		Response response = ClientBuilder.newClient().target("/calendar").request().get();
+
+		String url = "http://localhost:" + EmbeddedServer.PORT + "/calendar";
+
+		logger.debug("GET {}", url);
+
+		Response response = ClientBuilder.newClient().target(url).request().get();
 		int expectedStatus = 400;
 		int actualStatus = response.getStatus();
-		assertEquals(actualStatus, expectedStatus);
+		assertEquals(expectedStatus, actualStatus);
 	}
 
 	@Test
