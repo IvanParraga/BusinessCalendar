@@ -11,6 +11,7 @@ import com.ivanparraga.bscal.core.calendar.CalendarGuiceModule;
 import com.ivanparraga.bscal.rest.calendar.CalendarRest;
 
 public class GuiceServletConfig extends GuiceServletContextListener {
+	public static Injector injector;
 
 	@Override
 	protected Injector getInjector() {
@@ -24,10 +25,12 @@ public class GuiceServletConfig extends GuiceServletContextListener {
 
 				// Route all requests through GuiceContainer
 //				serve("/*").with(GuiceContainer.class);
+//				serve("/*").with()
 			}
 		};
 
-		return  Guice.createInjector(servletModule);
+		injector = Guice.createInjector(servletModule);
+		return injector;
 	}
 
 }

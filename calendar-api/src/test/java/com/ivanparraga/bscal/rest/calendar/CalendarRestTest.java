@@ -138,13 +138,13 @@ public class CalendarRestTest {
 		String calendarToCreate = "{\"year\":" + year + "}";
 		Entity<String> userEntity = Entity.entity(calendarToCreate, MediaType.APPLICATION_JSON);
 
-//		Response response = ClientBuilder.newClient().target("/calendar").request().get();
-
 		String url = "http://localhost:" + EmbeddedServer.PORT + "/calendar";
 
 		logger.debug("GET {}", url);
 
 		Response response = ClientBuilder.newClient().target(url).request().get();
+		logger.debug("Response: " + response);
+
 		int expectedStatus = 400;
 		int actualStatus = response.getStatus();
 		assertEquals(expectedStatus, actualStatus);
